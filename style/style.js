@@ -1,29 +1,43 @@
 import { StyleSheet } from 'react-native';
 
+/*color variables to remember
+Main dark: #381f1f
+Main light: #d4a7ac
+White highlight: #d4d2d2
+
+*/
 export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff'
   },
   header: {
-    minHeight: 60,
+    minHeight: 100,
+    justifyContent: 'center',
+    alignContent: 'center',
     alignItems: 'center',
-    marginTop: 30,
+    marginTop: 0,
     marginBottom: 15,
-    backgroundColor: 'skyblue',
+    backgroundColor: '#381f1f',
     flexDirection: 'row',
   },
   footer: {
-    marginTop: 20,
-    paddingBottom: 20,
-    backgroundColor: 'skyblue',
+    minHeight: 60,
+    paddingTop: 10,
+    alignContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#381f1f',
     flexDirection: 'row',
+    justifyContent: 'center',
   },
   home: {
     alignItems: 'center',
     padding: 30,
     gap: 10,
-    minHeight: 'auto'
+    minHeight: '75%',
+    backgroundColor: '#d4a7ac',
+    marginBottom: -25,
+    marginTop: -15,
   },
   ruletitle: {
     fontWeight: 'bold',
@@ -37,35 +51,48 @@ export default StyleSheet.create({
   goodluck: {
     textAlign: 'center',
     fontSize: 23,
-    color: '#FC42B2'
+    color: '#381f1f',
+    fontWeight: 'bold'
   },
   playbtn: {
-    backgroundColor: 'green',
-    padding: 15,
+    marginTop: 5,
+    padding: 10,
+    width: 150,
+    textAlign: 'center',
     borderRadius: 15,
-    color: 'white'
+    color: '#d4d2d2'
   },
   title: {
-    color: '#fff',
+    color: '#d4d2d2',
     fontWeight: 'bold',
     flex: 1,
     fontSize: 23,
     textAlign: 'center',
     margin: 10,
+    letterSpacing: 15
   },
   author: {
-    color: '#fff',
+    color: '#d4d2d2',
     fontWeight: 'bold',
     flex: 1,
-    fontSize: 15,
+    fontSize: 12,
     textAlign: 'center',
-    margin: 10,
+  },
+  scoreBoardView: {
+    backgroundColor: '#d4a7ac',
+    padding: 10,
+    gap: 10,
+    minHeight: 'auto',
+    flex: 1,
+    marginBottom: -25,
+    marginTop: -15,
+    justifyContent: 'flex-start',
   },
   gameboard: {
     backgroundColor: '#d4a7ac',
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: 30,
+    justifyContent: 'flex-start',
+    padding: 10,
     gap: 10,
     minHeight: 'auto',
     flex: 1,
@@ -86,18 +113,85 @@ export default StyleSheet.create({
   flex: {
     flexDirection: "row"
   },
-  button: {
+  throwButton: {
     margin: 30,
     flexDirection: "row",
     padding: 10,
-    backgroundColor: "#73CED6",
     width: 150,
     borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center'
   },
   buttonText: {
-    color:"#2B2B52",
+    color:"white",
     fontSize: 20
-  }
+  },
+  gameOverView: {
+    width: '100%',
+    backgroundColor: '#613636',
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 100,
+    zIndex: 999,
+    height: 450,
+    gap: 20,
+    borderRadius: 15
+  },
+  savePointsBtn: {
+    padding: 10,
+    borderRadius: 15
+  },
+  gameOverText: {
+    color: 'white',
+    fontSize: 18
+  },
+  throwsLeft: {
+    color: 'black',
+    fontSize: 18
+  },
+  newGameButton: {
+    padding: 10,
+    margin: 10,
+    borderRadius: 5,
+    position: 'absolute',
+    bottom: 10,
+    borderRadius: 15
+  },
+  buttonText: {
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 15,
+  },
+  viewTitle: {
+    fontSize: 25,
+    color: "#381f1f",
+    textAlign: 'center',
+    padding: 20
+  },
+  clearScoresBtn: {
+    marginTop: 20,
+    padding: 10,
+    borderRadius: 15,
+    textAlign: 'center',
+    width: 150,
+    alignItems: 'center',
+    alignSelf: 'center'
+  },
+    saveNameBtn: {
+    marginTop: 20,
+    padding: 10,
+    borderRadius: 15,
+    textAlign: 'center',
+    width: 150,
+    alignItems: 'center',
+    alignSelf: 'center'
+    },
+    nameInput: {
+    fontSize: 18,
+    borderBottomWidth: 1,
+    width: 200,
+    textAlign: 'center'
+    }
 });

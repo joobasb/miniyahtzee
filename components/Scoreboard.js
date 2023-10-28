@@ -15,6 +15,7 @@ export default Scoreboard = ({ navigation }) => {
         const unsubscribe = navigation.addListener('focus', () =>  {
             getScoreBoardData();
         });
+        return unsubscribe;
     }, [navigation])
 
     const getScoreBoardData = async() => {
@@ -22,6 +23,7 @@ export default Scoreboard = ({ navigation }) => {
             const jsonValue = await AsyncStorage.getItem(SCOREBOARD_KEY);
             if (jsonValue !== null) {
                 let tmpScores = JSON.parse(jsonValue);
+                tmpScores.sort(function(a, b){return b.points - a.points});
                 setScores(tmpScores);
             }
         }
@@ -45,8 +47,9 @@ export default Scoreboard = ({ navigation }) => {
     return(
         <>
         <Header/>
-        <View>
-            <Text>Scoreboard here</Text>
+        <View style={styles.scoreBoardView}>
+            <View>
+            <Text style={styles.viewTitle}>Scoreboard</Text>
             {scores.length === 0 ? 
             <Text>Scoreboard is empty</Text>
             :
@@ -62,13 +65,18 @@ export default Scoreboard = ({ navigation }) => {
             ))
             }
         </View>
+
         <View>
-            <Pressable
-            onPress={() => clearScoreboard()}>
-                <Text>Clear Scoreboard</Text>
+            <Pressable 
+            onPress={() => clearScoreboard()} style={({pressed}) => [{
+                backgroundColor: pressed ? '#381f1f' : '#d4d2d2',
+                },
+                styles.clearScoresBtn,    
+                ]}>
+                <Text style={styles.buttonText}>Clear Scoreboard</Text>
             </Pressable>
         </View>
-        <Footer />
+        </View>
         </>
     )
 }

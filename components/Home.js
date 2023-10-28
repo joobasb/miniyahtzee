@@ -23,12 +23,16 @@ export default Home = ({ navigation }) => {
         <>
         <Header />
         <View style={styles.home}>
-            <MaterialCommunityIcons name="information" size={90} color="steelblue" />
+            <MaterialCommunityIcons name="information" size={90} color="#381f1f" />
             {!hasPlayerName ?
                 <>
-                <Text>For scoreboard enter your name...</Text>
-                <TextInput onChangeText={setPlayerName} autoFocus={true} />
-                <Pressable
+                <Text style={styles.viewTitle}>For scoreboard enter your name</Text>
+                <TextInput style={styles.nameInput} onChangeText={setPlayerName} autoFocus={true} />
+                <Pressable style={({pressed}) => [{
+                    backgroundColor: pressed ? '#381f1f' : '#d4d2d2',
+                    },
+                    styles.saveNameBtn,    
+                    ]}
                 onPress={() => handlePlayerName(playerName)}>
                     <Text>Ok</Text>
                 </Pressable>
@@ -59,9 +63,14 @@ export default Home = ({ navigation }) => {
                     {BONUS_POINTS_LIMIT} points is the limit of
                     getting bonus which gives you {BONUS_POINTS} points more.
                 </Text>
-                <Text style={styles.goodluck}>Good luck, {playerName}</Text>
-                <Pressable onPress={() => navigation.navigate('Gameboard', {player: playerName})}>
-                    <Text style={styles.playbtn}>PLAY</Text>
+                <Text style={styles.goodluck}>Good luck, {playerName}!</Text>
+                <Pressable onPress={() => navigation.navigate('Gameboard', {player: playerName})}style={({pressed}) => [{
+                    backgroundColor: pressed ? '#381f1f' : '#d4d2d2',
+                    },
+                    styles.playbtn,    
+                    ]}
+                >
+                    <Text style={styles.buttonText}>PLAY</Text>
                 </Pressable>
                 </>
             }

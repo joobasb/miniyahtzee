@@ -33,9 +33,42 @@ const [dicePointsTotal, setDicePointsTotal] =
     useState(new Array(MAX_SPOT).fill(0));
 // Tulostaulun pisteet
 const [scores, setScores] = useState([]);
-const totalSum = parseInt(dicePointsTotal.reduce((a, b) => a + b, 0));
+const totalSum = parseInt(dicePointsTotal.reduce((a, b) => a + b, 0))
 /* const [newPointsRow, setNewPointsRow] =  */
-const [totalTurns, setTotalTurns] = useState(6);
+/* const [totalTurns, setTotalTurns] = useState(6); */
+const getFullDate=()=> {
+    var date = new Date().getDate();
+    var month = new Date().getMonth() + 1;
+    var year = new Date().getFullYear();
+    return date + '.' + month + '.' + year
+}
+const getTime=()=> {
+    let currentDate = new Date();
+    let hours = currentDate.getHours();
+    let minutes = (currentDate.getMinutes() < 10 ? '0' : '') + currentDate.getMinutes() ;
+    return hours + ':' + minutes;
+}
+
+const checkBonusPoints = () => {
+    const totalSumNoBonus = totalSum;
+    if (totalSum >= BONUS_POINTS_LIMIT) {
+        return totalSumNoBonus + BONUS_POINTS
+    } else {
+        return totalSumNoBonus
+    }
+}
+
+const resetGame = () => {
+    setNbrOfThrowsLeft(NBR_OF_THROWS);
+    setStatus('Throw dices');
+    setGameEndStatus(false);
+    setSelectedDices(new Array(NBR_OF_DICES).fill(false));
+    setDiceSpots(new Array(NBR_OF_DICES).fill(0));
+    setSelectedDicePoints(new Array(MAX_SPOT).fill(false));
+    setDicePointsTotal(new Array(MAX_SPOT).fill(0));
+    setScores([]);
+  };
+
 
 useEffect(() => {
     if (playerName === '' && route.params?.player) {
@@ -118,7 +151,6 @@ const dicesRow = [];
             /* setSelectedDices((new Array(NBR_OF_DICES).fill(false))); */
             setSelectedDices([]);
             setStatus('Throw the dices again')
-            console.log(totalSum, selectedPoints.every(x => x))
             return points[i];
 
     } else {
@@ -131,9 +163,9 @@ const dicesRow = [];
         const playerPoints = {
             key: newKey,
             name: playerName,
-            date: 'pvm', // hae pvm funktiolla
-            time: 'time', //hae klo funtiolla
-            points: totalSum //yhteispisteet (mahdollinen bonus mukaan)
+            date: getFullDate(), // hae pvm funktiolla
+            time: getTime(), //hae klo funtiolla
+            points: checkBonusPoints()//yhteispisteet (mahdollinen bonus mukaan)
         }
         try {
             const newScore = [...scores, playerPoints];
@@ -159,9 +191,10 @@ const dicesRow = [];
     }
 
     const throwDices = () => {
-        if (/* nbrOfThrowsLeft === 3 &&  */selectedDicePoints.every(x => x) && !gameEndStatus){
+        if (selectedDicePoints.every(x => x) && !gameEndStatus){
             setNbrOfThrowsLeft(0);
-            setStatus('Game over');
+            checkBonusPoints();
+
             return 1
         }
         else if (nbrOfThrowsLeft === 0 && !gameEndStatus){
@@ -201,11 +234,11 @@ const dicesRow = [];
     }
 
     function getDiceColor(i) {
-        return selectedDices[i] ? 'black' : 'steelblue';
+        return selectedDices[i] ? '#381f1f' : '#d4d2d2';
     }
 
     function getDicePointsColor(i) {
-        return selectedDicePoints[i] && !gameEndStatus ? 'black' : 'steelblue';
+        return selectedDicePoints[i] && !gameEndStatus ? 'black' : '#d4d2d2';
     }
 
 
@@ -213,21 +246,42 @@ const dicesRow = [];
         <>
         <Header/>
         <View style={styles.gameboard}>
+        <Text style={styles.viewTitle}>Gameboard</Text>
+        <Text style={styles.throwsLeft}>Throws left: {nbrOfThrowsLeft}</Text>
             <Container fluid>
                 <Row>{dicesRow}</Row>
             </Container>
-            <Text>Throws left: {nbrOfThrowsLeft}</Text>
+           
             <Text>{status}</Text>
             {!selectedDicePoints.every(x => x) ? 
-            <Pressable
-                onPress={() => throwDices()} style={styles.button}>
-                    <Text style={styles.buttonText}>Throw dices</Text>
+            <Pressable onPress={() => throwDices()}
+                style={({pressed}) => [{
+                    backgroundColor: pressed ? '#381f1f' : '#d4d2d2',
+                    },
+                    styles.throwButton,    
+                    ]}>
+                <Text style={styles.buttonText}>Throw dices</Text>
             </Pressable>
             : 
-            <Pressable
-                style={styles.button}>
-                    <Text style={styles.buttonText}>Game over</Text>
-            </Pressable>
+            <View style={styles.gameOverView}>
+                <Text style={styles.gameOverText}>Game over</Text>
+                <Text style={styles.gameOverText}>You scored a total points of {checkBonusPoints()}</Text>
+                <Pressable style={({pressed}) => [{
+                    backgroundColor: pressed ? '#381f1f' : '#d4d2d2',
+                    },
+                    styles.savePointsBtn,    
+                    ]} onPress={ () => savePlayerPoints()}>
+                    <Text style={styles.buttonText}>Save your points if you dare</Text>
+                </Pressable>
+                    <Pressable onPress={resetGame} style={({pressed}) => [{
+                    backgroundColor: pressed ? '#381f1f' : '#d4d2d2',
+                    },
+                    styles.newGameButton,    
+                    ]}
+                    >
+                    <Text style={styles.buttonText}>New Game</Text>
+                </Pressable>
+            </View>
             }
             <Container fluid>
                 <Row style={styles.row}>{pointsRow}</Row>
@@ -235,14 +289,10 @@ const dicesRow = [];
             <Container fluid>
                 <Row>{pointsToSelectRow}</Row>
             </Container>
-            <Text>{totalSum}</Text>
-            <Pressable
-            onPress={ () => savePlayerPoints()}>
-                <Text>Save points</Text>
-            </Pressable>
-            <Text>Player: {playerName}</Text>
+            <Text style={styles.viewTitle}>Points:{"\n"}{totalSum}</Text>
+            <Text style={styles.viewTitle}>Player: {playerName}</Text>
         </View>
-        <Footer />
+
         </>
     )
 }
