@@ -131,10 +131,7 @@ const dicesRow = [];
     }
 
     const selectDicePoints = (i) => {
-/*         if (nbrOfThrowsLeft === 0 && selectedDicePoints.every(x => x)){
-            setStatus('Game over')
-        }
-        else  */if (nbrOfThrowsLeft === 0){
+            if (nbrOfThrowsLeft === 0){
             let selectedPoints = [...selectedDicePoints];
             let points = [...dicePointsTotal];
             if (!selectedPoints[i]){
@@ -148,7 +145,6 @@ const dicesRow = [];
             setDicePointsTotal(points)
             setSelectedDicePoints(selectedPoints);
             setNbrOfThrowsLeft(3);
-            /* setSelectedDices((new Array(NBR_OF_DICES).fill(false))); */
             setSelectedDices([]);
             setStatus('Throw the dices again')
             return points[i];

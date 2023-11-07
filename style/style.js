@@ -32,12 +32,12 @@ export default StyleSheet.create({
   },
   home: {
     alignItems: 'center',
-    padding: 30,
-    gap: 10,
-    minHeight: '75%',
+    padding: 5,
+    gap: 5,
+    minHeight: "20%",
     backgroundColor: '#d4a7ac',
-    marginBottom: -25,
-    marginTop: -15,
+    marginBottom: 0,
+    marginTop: 0,
   },
   ruletitle: {
     fontWeight: 'bold',
@@ -46,7 +46,7 @@ export default StyleSheet.create({
   },
   ruleinfo: {
     textAlign: 'center',
-    lineHeight: 25,
+    lineHeight: 20,
   },
   goodluck: {
     textAlign: 'center',
@@ -82,22 +82,22 @@ export default StyleSheet.create({
     backgroundColor: '#d4a7ac',
     padding: 10,
     gap: 10,
-    minHeight: 'auto',
+    minHeight: '50%',
     flex: 1,
-    marginBottom: -25,
-    marginTop: -15,
+    marginBottom: 0,
+    marginTop: 0,
     justifyContent: 'flex-start',
   },
   gameboard: {
     backgroundColor: '#d4a7ac',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    padding: 10,
-    gap: 10,
-    minHeight: 'auto',
+    padding: 1,
+    gap: 1,
+    minHeight: '50%',
     flex: 1,
-    marginBottom: -25,
-    marginTop: -15
+    marginBottom: 0,
+    marginTop: 0
   },
   gameinfo: {
     backgroundColor: '#fff',
